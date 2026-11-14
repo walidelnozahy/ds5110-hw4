@@ -1,0 +1,11 @@
+-- T4d. The app team's D_month query (in run.py) filters with strftime and
+-- stays a SCAN whatever you index. Rewrite it as a range on the raw column,
+-- with two placeholders: the first and last second of the month, as
+--   timestamp >= ? AND timestamp < ?
+-- run.py fills in the month boundaries and checks the counts match.
+-- Required: one column, the count.
+--
+-- Prediction (commit before running): plan of D_month after your indexes ______;
+-- plan of this rewrite ______.
+
+-- YOUR QUERY HERE

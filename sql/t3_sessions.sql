@@ -1,0 +1,11 @@
+-- T3. Rating sessions. A user's ratings form one session until there is a gap
+-- of more than 1800 seconds (30 minutes) since that user's previous rating.
+-- Required columns, one row per session:
+--   user_id, session_no, n_ratings, start_ts, duration_s
+-- session_no counts 1, 2, 3, ... within each user, in time order.
+-- Suggested steps (one CTE each): gap with LAG; a 0/1 new_session flag;
+-- a running SUM of the flag with an explicit ROWS frame; GROUP BY.
+--
+-- Prediction (commit before running): median ratings per session = ______.
+
+-- YOUR QUERY HERE

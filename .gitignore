@@ -1,0 +1,8 @@
+# The database is the course reference copy from Canvas: copied in, never committed.
+data/*
+!data/.gitkeep
+# Everything in output/ is rebuilt by run.py.
+output/*
+!output/.gitkeep
+__pycache__/
+.venv/
