@@ -23,8 +23,6 @@ t1c: 269 rows
 
 ## T2. Top three per occupation
 
-Tie-breaker for the ROW_NUMBER version: ___
-
 ### Prediction
 
 - **`t2_top3_row_number.sql`**: This query finds the top 3 movies for each occupation, based on average rating, considering only movies with at least 20 ratings from that occupation.
@@ -38,6 +36,7 @@ Tie-breaker for the ROW_NUMBER version: ___
 ### Explanation
 
 I see 11 jobs that have no rows at all, because they have too few users for any movie to get 20 ratings. I think I would yse ROW_NUMBER because it always shows at most 3 movies and gives the same result every time.
+DENSE_RANK would be right for a rule like "show every movie with one of the 3 best scores". It keeps all ties without skipping numbers. ROW_NUMBER would drop tied movies, and RANK skips a number after a tie, so it can miss the 3rd-best score.
 
 ## T3. Sessions and frames
 
@@ -54,9 +53,13 @@ I see 11 jobs that have no rows at all, because they have too few users for any 
 
 ### Explanation
 
-When two ratings have the same timestamp, the second one's gap is 0.
-Also someone who takes a break in the middle of rating gets split into two sessions. Two separate visits 20 minutes apart get merged into one.
+When two ratings have the same timestamp, the second one's gap is 0, so its flag is 0. The default frame adds up all the tied rows at once, but they're zeros, so the sessions come out the same with or without ROWS.  
+
+Someone who takes a break of more than 30 minutes in the middle of rating gets split into two sessions. Two separate visits 20 minutes apart get merged into one. 
+
 Only rows that tie on timestamp with another rating from the same user. The default frame averages in all of the tied ratings at once, while ROWS adds them one by one.
+
+On each user's last rating, both frames include all their ratings, so all 943 users end on the same average. 
 
 ## T4. Two indexes for four queries
 
@@ -87,3 +90,11 @@ A_profile was already using an index because the primary key (user_id, movie_id)
 D_month stays a SCAN because it turns every timestamp into a month first, so the index is useless there. The rewrite just checks if the timestamp is between two numbers, so it can jump straight to them.
 
 ## T5. Recommendation
+
+I'd add two indexes, one on movie and rating and one on the rating time. An index works like the index at the back of a book: the database jumps straight to what it needs instead of reading everything.
+
+They made a big difference. The movie page went from 1.5 ms to 0.005 ms, and "ratings since a date" from 1.3 ms to 0.01 ms. The monthly count got about 15 times faster too, once we asked for a time range instead of a month name.
+
+I'd skip an index for the user profile page. It's already fast at 0.04 ms.
+
+The catch is space. The two indexes added about 2.5 MB, and every new rating has to be saved in three places now, so adding ratings gets a little slower.
