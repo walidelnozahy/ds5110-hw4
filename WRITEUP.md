@@ -17,6 +17,9 @@ t1b: 45,232 of 100,000 ratings are above both means. With only movies that have 
 t1c: 269 rows
 
 ### Explanation
+1. Each OVER() is its own window. One groups the rows by user and the other by movie nd both run over the same rows. no row merging
+2. If a movie has only one rating, the movie's average is that rating, and a rating can't be higher than itself. but they will still count in tootal
+3. It replaced the genre_means step and the join back to it. The old query needed them because GROUP BY genre_id squashes each genre into one row.
 
 ## T2. Top three per occupation
 
