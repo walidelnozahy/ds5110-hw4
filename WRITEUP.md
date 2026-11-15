@@ -49,15 +49,14 @@ I see 11 jobs that have no rows at all, because they have too few users for any 
 
 ### Result
 
-- **`t3_sessions.sql`**: ___ sessions, median ___ ratings per session. Without the ROWS frame the answer is (the same / different).
-- **`t3b_running_mean.sql`**: the two columns disagree on ___ rows.
+- **`t3_sessions.sql`**: 2,793 sessions with a median of 11 ratings each not 3
+- **`t3b_running_mean.sql`**: the two columns disagree on 49,787 rows not one
 
 ### Explanation
 
-- **Does the default frame change the sessions, and what happens at tied timestamps:** ___
-- **How the 30-minute rule could split or merge real sessions:** ___
-- **Which running-mean rows differ, and why here but not for the flags:** ___
-- **Why every user's last value agrees:** ___
+When two ratings have the same timestamp, the second one's gap is 0.
+Also someone who takes a break in the middle of rating gets split into two sessions. Two separate visits 20 minutes apart get merged into one.
+Only rows that tie on timestamp with another rating from the same user. The default frame averages in all of the tied ratings at once, while ROWS adds them one by one.
 
 ## T4. Two indexes for four queries
 
