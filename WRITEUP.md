@@ -23,13 +23,24 @@ t1c: 269 rows
 
 ## T2. Top three per occupation
 
-Tie-breaker for the ROW_NUMBER version:
+Tie-breaker for the ROW_NUMBER version: ___
 
 ### Prediction
 
+- **`t2_top3_row_number.sql`**: This query finds the top 3 movies for each occupation, based on average rating, considering only movies with at least 20 ratings from that occupation.
+- **`t2_top3_rank.sql`**: returns more rows than ROW_NUMBER, because RANK() gives tied movies the same rank, so multiple movies can qualify for the top 3.
+
 ### Result
 
+- **`t2_top3_row_number.sql`**: ___ rows.
+- **`t2_top3_rank.sql`**: ___ rows.
+
 ### Explanation
+
+- **A tie from the data:** ___
+- **Jobs with fewer than three rows:** ___
+- **Which version for a "top picks for your profession" page:** ___
+- **A rule where DENSE_RANK is right, and what ROW_NUMBER and RANK get wrong:** ___
 
 ## T3. Sessions and frames
 
