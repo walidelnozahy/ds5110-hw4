@@ -12,6 +12,10 @@ All numbers come from `python run.py all` and are in `output/`.
 
 ### Result
 
+t1a: 100,000 rows, one per rating.
+t1b: 45,232 of 100,000 ratings are above both means. With only movies that have 20+ ratings
+t1c: 269 rows
+
 ### Explanation
 
 ## T2. Top three per occupation
