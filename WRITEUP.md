@@ -43,9 +43,21 @@ I see 11 jobs that have no rows at all, because they have too few users for any 
 
 ### Prediction
 
+- **`t3_sessions.sql`**: the median session has about 3 ratings, because most people rate a couple of movies, leave, and come back later.
+
+- **`t3b_running_mean.sql`**:  the two columns disagree on no rows, because both are ordered by timestamp, so the running average should come out the same either way.
+
 ### Result
 
+- **`t3_sessions.sql`**: ___ sessions, median ___ ratings per session. Without the ROWS frame the answer is (the same / different).
+- **`t3b_running_mean.sql`**: the two columns disagree on ___ rows.
+
 ### Explanation
+
+- **Does the default frame change the sessions, and what happens at tied timestamps:** ___
+- **How the 30-minute rule could split or merge real sessions:** ___
+- **Which running-mean rows differ, and why here but not for the flags:** ___
+- **Why every user's last value agrees:** ___
 
 ## T4. Two indexes for four queries
 
