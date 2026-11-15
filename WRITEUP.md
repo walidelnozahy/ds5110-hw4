@@ -32,15 +32,12 @@ Tie-breaker for the ROW_NUMBER version: ___
 
 ### Result
 
-- **`t2_top3_row_number.sql`**: ___ rows.
-- **`t2_top3_rank.sql`**: ___ rows.
+- **`t2_top3_row_number.sql`**: 27 rows
+- **`t2_top3_rank.sql`**: 28 rows
 
 ### Explanation
 
-- **A tie from the data:** ___
-- **Jobs with fewer than three rows:** ___
-- **Which version for a "top picks for your profession" page:** ___
-- **A rule where DENSE_RANK is right, and what ROW_NUMBER and RANK get wrong:** ___
+I see 11 jobs that have no rows at all, because they have too few users for any movie to get 20 ratings. I think I would yse ROW_NUMBER because it always shows at most 3 movies and gives the same result every time.
 
 ## T3. Sessions and frames
 
