@@ -71,23 +71,19 @@ D_month: before, a SCAN. After, still a SCAN.
 D_rewrite: before, a SCAN. After, a SEARCH using the (timestamp) index.
 
 ### Result
-
-| Query | Plan after | ms before | ms after |
-| --- | --- | --- | --- |
-| A_profile | ___ | ___ | ___ |
-| B_movie_page | ___ | ___ | ___ |
-| C_recent | ___ | ___ | ___ |
-| D_month | ___ | ___ | ___ |
-| D_rewrite | ___ | ___ | ___ |
-
-Database size: ___ bytes before, ___ bytes after, so the indexes use ___ bytes.
+A_profile didn't change. It was already finding the user through the primary key index and still sorts their ratings by time. It takes about 0.04 ms either way.
+B_movie_page went from reading the whole table to jumping straight to the movie with the new index, from 1.48 ms down to 0.005 ms, about 300 times faster.
+C_recent went from reading the whole table to jumping to the time range with the timestamp index, from 1.27 ms to 0.011 ms, about 117 times faster.
+D_month still reads every row. Now it reads the smaller index instead of the table, but it's still about 10 ms.
+D_rewrite uses the timestamp index to jump to the month, going from 1.94 ms to 0.13 ms, about 15 times faster, and gives the same counts as D_month.
+Size: the database grew from 3.63 MB to 6.17 MB, so the two indexes take about 2.5 MB.
 
 ### Explanation
 
-- **Why these two indexes:** ___
-- **Why A_profile used an index before I added any:** ___
-- **What USE TEMP B-TREE adds:** ___
-- **Why D_month stays a SCAN, and what the rewrite changes:** ___
-- **Did the rewrite change my choice of indexes:** ___
+These two indexes were picked because B and C were reading the whole table every time, and one index fixes each of them. The (movie_id, rating) index also stores the rating, so B never has to open the table. The (timestamp) index helps C and the D rewrite. A was already fine.
+
+A_profile was already using an index because the primary key (user_id, movie_id) comes with one, and it starts with user_id. But it's sorted by movie, not time, so SQLite still has to sort each user's ratings to get the newest 20. That's the USE TEMP B-TREE line. It's not a big deal, since a user only has about 100 ratings.
+
+D_month stays a SCAN because it turns every timestamp into a month first, so the index is useless there. The rewrite just checks if the timestamp is between two numbers, so it can jump straight to them.
 
 ## T5. Recommendation
