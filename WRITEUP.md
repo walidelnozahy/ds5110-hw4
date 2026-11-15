@@ -6,7 +6,7 @@ All numbers come from `python run.py all` and are in `output/`.
 
 ### Prediction
 
-- **`t1a_rating_in_context.sql`**: Bascially for every rating it should return the rating itself (3 columns user_id, movie_id, rating) plus the average rating for that specific user, plus the average rating for that specifci movie for all userss.
+- **`t1a_rating_in_context.sql`**: Bascially for every rating it should return the rating itself (3 columns user_id, movie_id, rating) plus the average rating for that specific user, plus the average rating for that specifci movie for all userss. so 100,000 rows.
 - **`t1b_above_both.sql`**: Should return how often does a user give a movie a rating that is higher than both their usual rating and that movie usual ratin.
 - **`t1c_window_rewrite.sql`**: Should return movies that are rated at least 0.5 points higher than the average movie rating in their genre, considering only movies with 30+ ratings.
 
