@@ -1,10 +1,14 @@
-# HW4 write-up: windows and plans
+# HW4 write-up
 
-Every number below comes from `python run.py all` and can be found in `output/`.
+All numbers come from `python run.py all` and are in `output/`.
 
 ## T1. A rating in context
 
 ### Prediction
+
+- **`t1a_rating_in_context.sql`**: one row per rating, so about 100,000 rows (MovieLens 100k). A window adds the two means as columns but does not merge rows like `GROUP BY` would.
+- **`t1b_above_both.sql`**: about 35%. Beating both your own usual rating and the movie's usual rating is harder than beating one. The 20+ share should be a bit higher, because movies with very few ratings make it hard to be above the movie's mean.
+- **`t1c_window_rewrite.sql`**: the `genre_means` step and the final join back to it disappear. The window puts the genre mean on each row directly.
 
 ### Result
 

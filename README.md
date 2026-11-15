@@ -33,7 +33,5 @@ Task 4 works on a copy in `output/`. Results go to `output/`, and
 
 Record here what you used an assistant for, and for what:
 
-- Claude (Anthropic) wrote first drafts of the SQL in `sql/` and explained each
-  line to me; I can explain every line. All predictions and explanations in
-  `WRITEUP.md` are my own; Claude only pointed out where my reasoning disagreed
-  with the lecture or the results.
+- Claude helped me draft the SQL in `sql/`. I went through every line and can explain it.
+- With the professor's permission, Claude also helped write the predictions and explanations in `WRITEUP.md`. Predictions were committed before each task was run.
