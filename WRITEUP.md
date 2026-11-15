@@ -60,10 +60,34 @@ Only rows that tie on timestamp with another rating from the same user. The defa
 
 ## T4. Two indexes for four queries
 
+Indexes: `(movie_id, rating)` and `(timestamp)`.
+
 ### Prediction
+A_profile: before, it searches with the primary key index but still has to sort. After, the same thingg.
+
+B_movie_page: before, a SCAN of the whole table. After, a SEARCH using the (movie_id, rating) index.
+C_recent: before, a SCAN. After, a SEARCH using the (timestamp) index.
+D_month: before, a SCAN. After, still a SCAN.
+D_rewrite: before, a SCAN. After, a SEARCH using the (timestamp) index.
 
 ### Result
 
+| Query | Plan after | ms before | ms after |
+| --- | --- | --- | --- |
+| A_profile | ___ | ___ | ___ |
+| B_movie_page | ___ | ___ | ___ |
+| C_recent | ___ | ___ | ___ |
+| D_month | ___ | ___ | ___ |
+| D_rewrite | ___ | ___ | ___ |
+
+Database size: ___ bytes before, ___ bytes after, so the indexes use ___ bytes.
+
 ### Explanation
+
+- **Why these two indexes:** ___
+- **Why A_profile used an index before I added any:** ___
+- **What USE TEMP B-TREE adds:** ___
+- **Why D_month stays a SCAN, and what the rewrite changes:** ___
+- **Did the rewrite change my choice of indexes:** ___
 
 ## T5. Recommendation
